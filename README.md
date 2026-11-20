@@ -4,13 +4,9 @@ Windows-Anwendung für den programmierbaren Tabor-8200-Funktions-/Pulsgenerator 
 
 ## Bildschirmaufnahmen
 
-### Helle Ansicht
-
-![Tabor 8200 Control in der hellen Ansicht](docs/screenshots/tabor8200-hell.png)
-
-### Dunkle Ansicht
-
-![Tabor 8200 Control in der dunklen Ansicht](docs/screenshots/tabor8200-dunkel.png)
+| Hell | Dunkel |
+| --- | --- |
+| <a href="docs/screenshots/tabor8200-hell.png"><img src="docs/screenshots/tabor8200-hell.png" alt="Tabor 8200 Control in der hellen Ansicht" width="400"></a> | <a href="docs/screenshots/tabor8200-dunkel.png"><img src="docs/screenshots/tabor8200-dunkel.png" alt="Tabor 8200 Control in der dunklen Ansicht" width="400"></a> |
 
 ## Installation unter Windows
 
