@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>theme.qss</file>
+        <file>theme-light.qss</file>
+        <file>checkmark.png</file>
+    </qresource>
+    <qresource prefix="/branding">
+        <file>logo_g.gif</file>
+    </qresource>
+    <qresource prefix="/">
+        <file alias="device-icon.ico">tabor8200-icon-c.ico</file>
+    </qresource>
+</RCC>
