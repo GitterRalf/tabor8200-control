@@ -2,6 +2,8 @@
 
 Windows-Anwendung für den programmierbaren Tabor-8200-Funktions-/Pulsgenerator und die Varianten 8220 und 8222. Bedienung und Geräteprotokoll folgen dem im Projektordner liegenden „Tabor 8200 20MHz Modulated FunctionPulse Generator, schematic Operator Manual.pdf“, besonders Kapitel 3 und 4.
 
+Entwickelt und gepflegt von Ralf Tralow mit Unterstützung von OpenAI Codex.
+
 ## Bildschirmaufnahmen
 
 | Hell | Dunkel |
