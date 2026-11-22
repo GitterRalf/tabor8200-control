@@ -179,9 +179,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),instrument(new Tab
                      {5,sweepTime},{6,sweepMarker},{7,phase},{8,burstCount},{9,triggerPhase},{10,dcLevel}};
     loadSettings();
     for (auto *input : tabs->findChildren<QComboBox *>()) {
-        connect(input,&QComboBox::currentIndexChanged,this,&MainWindow::updateControls);
+        connect(input,qOverload<int>(&QComboBox::currentIndexChanged),this,&MainWindow::updateControls);
     }
-    connect(amplitude,&QDoubleSpinBox::valueChanged,this,&MainWindow::updateControls);
+    connect(amplitude,qOverload<double>(&QDoubleSpinBox::valueChanged),this,&MainWindow::updateControls);
     instrument->moveToThread(&workerThread);
     connect(&workerThread,&QThread::finished,instrument,&QObject::deleteLater);
     connect(instrument,&Tabor8200::finished,this,&MainWindow::finish);
@@ -408,7 +408,7 @@ void MainWindow::unitRow(QFormLayout *form, const char *source, ScientificSpinBo
     unit->addItem(QString::fromLatin1(baseUnit), 1.0);
     unit->addItem(QString::fromLatin1(alternateUnit), alternateScale);
     input->setDisplayUnit(unit->currentText(), unit->currentData().toDouble());
-    connect(unit, &QComboBox::currentIndexChanged, input, [input, unit] {
+    connect(unit, qOverload<int>(&QComboBox::currentIndexChanged), input, [input, unit] {
         input->setDisplayUnit(unit->currentText(), unit->currentData().toDouble());
     });
 
@@ -503,7 +503,7 @@ void MainWindow::createMenus()
     auto *bar = menuBar();
     bar->setNativeMenuBar(false);
     auto *file = localized(bar->addMenu(QString()), QT_TR_NOOP("&Datei"), &QMenu::setTitle);
-    localized(file->addAction(QString(), QKeySequence::Quit, this, &QWidget::close),
+    localized(file->addAction(QString(), this, &QWidget::close, QKeySequence::Quit),
               QT_TR_NOOP("&Beenden"), &QAction::setText);
     auto *settings = localized(bar->addMenu(QString()), QT_TR_NOOP("&Einstellungen"), &QMenu::setTitle);
     settings->setObjectName("settingsMenu");
@@ -521,7 +521,7 @@ void MainWindow::createMenus()
         connect(action, &QAction::triggered, this, [this, dark] { setDarkTheme(dark); });
     }
     settings->addSeparator();
-    localized(settings->addAction(QString(), QKeySequence::Save, this, &MainWindow::saveSettings),
+    localized(settings->addAction(QString(), this, &MainWindow::saveSettings, QKeySequence::Save),
               QT_TR_NOOP("Einstellungen speichern"), &QAction::setText)->setObjectName("saveSettings");
 
     auto *right = new QMenuBar(bar);

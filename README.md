@@ -10,11 +10,11 @@ Windows-Anwendung für den programmierbaren Tabor-8200-Funktions-/Pulsgenerator 
 
 ## Installation unter Windows
 
-Das 64-Bit-Setup steht im [aktuellen GitHub-Release](https://github.com/GitterRalf/tabor8200-control/releases/latest) bereit. Für den Download ist ein GitHub-Konto mit Zugriff auf das private Repository erforderlich. Das Setup installiert standardmäßig nach `C:\Programme\Tabor 8200 Control` und enthält die benötigten Qt- und MinGW-Laufzeitdateien. Den 64-Bit-Treiber NI-488.2 für die GPIB-Verbindung separat installieren.
+Die Setups für x86 und x64 stehen im [aktuellen GitHub-Release](https://github.com/GitterRalf/tabor8200-control/releases/latest) bereit. Für den Download ist ein GitHub-Konto mit Zugriff auf das private Repository erforderlich. Das x64-Setup installiert standardmäßig nach `C:\Programme\Tabor 8200 Control` und enthalten die benötigten Qt- und MinGW-Laufzeitdateien. Den NI-488.2-Treiber mit Unterstützung für die Programmarchitektur für die GPIB-Verbindung separat installieren.
 
 ## Start und Verbindung
 
-Tabor 8200 Control über das Startmenü oder bei einem lokalen Build über `build\Tabor8200-Control.exe` starten. Unter Einstellungen → Verbindung sind NI-488.2, GPIB-Bus 0 und Primäradresse 16 voreingestellt. Der Hardwarebetrieb benötigt einen passenden 64-Bit-NI-488.2-Treiber und GPIB-Controller.
+Tabor 8200 Control über das Startmenü oder bei einem lokalen Build über `build\Tabor8200-Control.exe` starten. Unter Einstellungen → Verbindung sind NI-488.2, GPIB-Bus 0 und Primäradresse 16 voreingestellt. Der Hardwarebetrieb benötigt einen zur Programmarchitektur passenden NI-488.2-Treiber und GPIB-Controller.
 
 Verbinden aktiviert Fernsteuerung, richtet X0, Z0 und Q5 ein und liest N13 zur Geräteerkennung. Dadurch werden Antwortpräfixe, CR/LF mit EOI sowie die Meldung von Bereitschaft und Fehlern eingerichtet. Gesendete Befehle enden mit einem einzelnen CR (Abschnitt 4.9). Antworten werden unmittelbar nach dem jeweiligen N-Befehl gelesen, ohne zwischenzeitliche Statusabfrage (Abschnitt 4.10.1). Die Zahlenantworten dürfen nach dem Vorzeichen mit Leerzeichen aufgefüllt sein. Die vorbereiteten Signalwerte werden durch die jeweiligen Bedienaktionen übertragen. Trennen und Schließen geben die lokale Bedienung frei.
 
@@ -70,15 +70,32 @@ Strg+S speichert Eingabefelder, Einheiten, GPIB-Ziel und Darstellung im eigenen 
 
 ## Build
 
-Qt 6 mit Widgets und Linguist Tools, CMake ab 3.24, Ninja und das passende 64-Bit-MinGW-Kit werden benötigt.
+Qt 6 (x64) oder Qt 5.15 (x86) mit Widgets und Linguist Tools, CMake ab 3.24, Ninja und das passende MinGW-Kit für die gewählte Architektur werden benötigt.
 
 ~~~powershell
-.\build.ps1
+.\build.ps1                    # x64
+.\build.ps1 -Architecture x86  # x86
 ~~~
 
 Das Skript berücksichtigt den Umlaut im Projektpfad über eine temporäre Windows-Verzeichnisverknüpfung ohne Umlaut. Quellen und Build-Ergebnis liegen im Tabor8200-Verzeichnis. Qt-Kit und Compilerpfad sind über die Parameter QtKit und CompilerDirectory anpassbar. Die benötigten Qt-Laufzeitdateien werden im Build-Ordner bereitgestellt.
 
 Für das Windows-Setup anschließend `Tabor8200-Control.iss` mit Inno Setup kompilieren. Das Skript übernimmt Programmversion und Icon aus dem Projekt. Die fertige Datei liegt im Ordner `installer`.
+
+
+### Windows-Architekturen
+
+Die x86-Ausgabe verwendet Qt 5.15.19 mit MinGW 8.1 und hat einen eigenen
+Installationsordner **Tabor 8200 Control (32 Bit)**. Auf 64-Bit-Windows können beide
+Ausgaben parallel installiert werden. Die x64-Ausgabe verwendet weiterhin
+Qt 6 und ist beim Build der Standard.
+
+Der Build für x86 nutzt `build-x86`, der Build für x64 den Ordner `build`.
+Die Installer entstehen im Projektordner mit folgenden Aufrufen.
+
+```powershell
+ISCC.exe Tabor8200-Control.iss
+ISCC.exe /DBuildArch=x86 Tabor8200-Control.iss
+```
 
 ## Lizenz
 
